@@ -23,7 +23,7 @@ function formatDate(timestamp) {
     }
 
 
-    function displayTemperature(response) {
+function displayTemperature(response) {
         let temperatureElement = document.querySelector("#temperature");
         let cityElement = document.querySelector("#city");
         let descriptionElement = document.querySelector("#description");
@@ -31,6 +31,9 @@ function formatDate(timestamp) {
         let windElement = document.querySelector("#wind");
         let dateElement = document.querySelector("#date");
         let iconElement = document.querySelector("#icon");
+        let minTempElement = document.querySelector("#temp-min");
+        let maxTempElement = document.querySelector("#temp-max");
+        let feelsLikeElement = document.querySelector("#feels-like");
 
         fahrenheitTemperature = response.data.main.temp;
 
@@ -43,7 +46,10 @@ function formatDate(timestamp) {
         iconElement.setAttribute("src",
             `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
         );
-        iconElement.setAttribute("alt", response.data.weather[0].description);
+    iconElement.setAttribute("alt", response.data.weather[0].description);
+    maxTempElement.innerHTML = Math.round(response.data.main.temp_max);
+    minTempElement.innerHTML = Math.round(response.data.main.temp_min);
+    feelsLikeElement.innerHTML = Math.round(response.data.main.feels_like);
     }
 
 function search(city) {
@@ -63,7 +69,7 @@ function handleSubmit(event) {
 function displayCelsiusTemperature(event) {
     event.preventDefault();
     let temperatureElement = document.querySelector("#temperature");
-    
+
     fahrenheitLink.classList.remove("active");
     celsiusLink.classList.add("active"); 
     let celsiusTemperature = ((fahrenheitTemperature - 32) * 5) / 9;
