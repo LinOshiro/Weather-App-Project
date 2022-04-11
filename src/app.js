@@ -44,9 +44,21 @@ function formatDate(timestamp) {
         iconElement.setAttribute("alt", response.data.weather[0].description);
     }
 
-    let apiKey = "358bb59892afa5069bcb43f658651551";
-    let city = "Los Angeles";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
-    
-    
-    axios.get(apiUrl).then(displayTemperature);
+function search(city) {
+let apiKey = "358bb59892afa5069bcb43f658651551";
+let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+axios.get(apiUrl).then(displayTemperature);
+}
+
+
+function handleSubmit(event) {
+    event.preventDefault();
+    let cityInputElement = document.querySelector("#city-input");
+    search(cityInputElement.value);
+    console.log(cityInputElement);
+}
+
+search("Los Angeles");
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
