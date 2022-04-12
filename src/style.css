@@ -1,19 +1,19 @@
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:monospace;
   background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
 }
 
 h1 {
   color: blue;
-  font-size: 30px;
-  font-weight: 100;
+  font-size: 35px;
+  font-weight: 200;
   line-height: 28px;
-  margin-bottom: 0;
+  margin-bottom: 5px;
 }
 
 h2 {
   text-align: center;
-  font-size: 20px;
+  font-size: 25px;
   padding: 10px;
 }
 
@@ -25,9 +25,9 @@ ul {
 li {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 1px;
   color: rgb(46, 49, 61);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 100;
   line-height: 19px;
 }
@@ -43,7 +43,7 @@ li:first-letter {
 
 .weather-app {
   padding: 20px;
-  border: 1px solid black;
+  border: thick double #205a70;
   border-radius: 5px;
 }
 
@@ -52,9 +52,9 @@ li:first-letter {
 }
 
 .weather-temperature img {
-  margin-right: 5px;
-  height: 80px;
-  width: 80px;
+  margin-right: 10px;
+  height: 100px;
+  width: 100px;
 }
 
 .weather-temperature strong {
@@ -89,4 +89,5 @@ a:link {
  .forecast #day-forecast {
   display: inline;
   text-align: center;
+  font-size: 18px;
 }

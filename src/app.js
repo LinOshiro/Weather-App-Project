@@ -52,7 +52,7 @@ function displayTemperature(response) {
     feelsLikeElement.innerHTML = Math.round(response.data.main.feels_like);
     }
 
-function search(city) {
+function searchCity(city) {
 let apiKey = "358bb59892afa5069bcb43f658651551";
 let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
 axios.get(apiUrl).then(displayTemperature);
@@ -62,14 +62,24 @@ axios.get(apiUrl).then(displayTemperature);
 function handleSubmit(event) {
     event.preventDefault();
     let cityInputElement = document.querySelector("#city-input");
-    search(cityInputElement.value);
-    console.log(cityInputElement);
+    searchCity(cityInputElement.value);
 }
+
+function searchLocation(position) {
+let apiKey = "358bb59892afa5069bcb43f658651551";
+let apiUrl = `http://openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}$lon=${position.coords.longitude}&appid=${apiKey}&units=imperial`;
+axios.get(apiUrl).then(displayTemperature);
+}
+
+function getCurrentLocation(event) {
+    event.preventDefault();
+    navigator.geolocation.getCurrentPosition(searchLocation);
+}
+
 
 function displayCelsiusTemperature(event) {
     event.preventDefault();
     let temperatureElement = document.querySelector("#temperature");
-
     fahrenheitLink.classList.remove("active");
     celsiusLink.classList.add("active"); 
     let celsiusTemperature = ((fahrenheitTemperature - 32) * 5) / 9;
@@ -86,13 +96,16 @@ function displayFahrenheitTemperature(event) {
 
 let fahrenheitTemperature = null;
 
-let form = document.querySelector("#search-form");
-form.addEventListener("submit", handleSubmit);
-
 let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
 
-search("Los Angeles");
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
+
+let currentLocationButton = document.querySelector("#current-location-button");
+currentLocationButton.addEventListener("click", getCurrentLocation);
+
+searchCity("Los Angeles");
