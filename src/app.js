@@ -65,10 +65,44 @@ function handleSubmit(event) {
     searchCity(cityInputElement.value);
 }
 
+function showPositionTemperature(response) {
+    let temperatureElement = document.querySelector("#temperature");
+    let cityElement = document.querySelector("#city");
+    let descriptionElement = document.querySelector("#description");
+    let humidityElement = document.querySelector("#humidity");
+    let windElement = document.querySelector("#wind");
+    let dateElement = document.querySelector("#date");
+    let iconElement = document.querySelector("#icon");
+    let minTempElement = document.querySelector("#temp-min");
+    let maxTempElement = document.querySelector("#temp-max");
+    let feelsLikeElement = document.querySelector("#feels-like");
+
+    fahrenheitTemperature = response.data.main.temp;
+
+    temperatureElement.innerHTML = Math.round(response.data.main.temp);
+    cityElement.innerHTML = response.data.name;
+    descriptionElement.innerHTML = response.data.weather[0].description;
+    humidityElement.innerHTML = response.data.main.humidity;
+    windElement.innerHTML = Math.round(response.data.wind.speed);
+    dateElement.innerHTML = formatDate(response.data.dt * 1000);
+    iconElement.setAttribute(
+      "src",
+      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    );
+    iconElement.setAttribute("alt", response.data.weather[0].description);
+    maxTempElement.innerHTML = Math.round(response.data.main.temp_max);
+    minTempElement.innerHTML = Math.round(response.data.main.temp_min);
+    feelsLikeElement.innerHTML = Math.round(response.data.main.feels_like);
+}
+
 function searchLocation(position) {
+let long = position.coords.longitude;
+let lat = position.coords.latitude;
+
 let apiKey = "358bb59892afa5069bcb43f658651551";
-let apiUrl = `http://openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}$lon=${position.coords.longitude}&appid=${apiKey}&units=imperial`;
-axios.get(apiUrl).then(displayTemperature);
+let units = "imperial";
+let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=${units}&appid=${apiKey}`;
+axios.get(apiUrl).then(showPositionTemperature);
 }
 
 function getCurrentLocation(event) {
