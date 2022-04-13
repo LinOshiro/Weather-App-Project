@@ -86,12 +86,6 @@ a:link {
   text-align: center;
 }
 
- .forecast #day-forecast {
-  display: inline;
-  text-align: center;
-  font-size: 18px;
-}
-
 .weather-forecast {
   margin-top: 20px;
   text-align: center;
