@@ -23,7 +23,8 @@ function formatDate(timestamp) {
     }
 
 
-function displayForecast() {
+function displayForecast(response) {
+    console.log(response.data.daily);
     let forecastElement = document.querySelector("#forecast");
 
     let forecastHTML = `<div class="row">`;
@@ -35,7 +36,7 @@ function displayForecast() {
     <div class="col-2">
       <div class="weather-forecast-date">${day}</div>
       <img 
-      src="http://openweathermap.org/img/wn/01d@2x.png"
+      src="https://openweathermap.org/img/wn/01d@2x.png"
       alt=""
       width="42"
       />
@@ -51,6 +52,13 @@ function displayForecast() {
     forecastElement.innerHTML = forecastHTML;
 }
 
+function getForecast(coordinates) {
+    console.log(coordinates);
+    let apiKey = "358bb59892afa5069bcb43f658651551";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat={coordinates.lat}&lon={coordinates.lon}&exclude={part}&appid={apiKey}&units=imperial`;
+    console.log(apiUrl);
+    axios.get(apiUrl).then(displayForecast);
+}
 
 function displayTemperature(response) {
         let temperatureElement = document.querySelector("#temperature");
@@ -73,12 +81,14 @@ function displayTemperature(response) {
         windElement.innerHTML = Math.round(response.data.wind.speed);
         dateElement.innerHTML = formatDate(response.data.dt * 1000);
         iconElement.setAttribute("src",
-            `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+            `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
         );
     iconElement.setAttribute("alt", response.data.weather[0].description);
     maxTempElement.innerHTML = Math.round(response.data.main.temp_max);
     minTempElement.innerHTML = Math.round(response.data.main.temp_min);
     feelsLikeElement.innerHTML = Math.round(response.data.main.feels_like);
+
+    getForecast(response.data.coord);
     }
 
 function searchCity(city) {
@@ -116,7 +126,7 @@ function showPositionTemperature(response) {
     dateElement.innerHTML = formatDate(response.data.dt * 1000);
     iconElement.setAttribute(
       "src",
-      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+      `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
     );
     iconElement.setAttribute("alt", response.data.weather[0].description);
     maxTempElement.innerHTML = Math.round(response.data.main.temp_max);
@@ -171,5 +181,4 @@ form.addEventListener("submit", handleSubmit);
 let currentLocationButton = document.querySelector("#current-location-button");
 currentLocationButton.addEventListener("click", getCurrentLocation);
 
-        searchCity("Los Angeles");
-displayForecast();
+searchCity("Los Angeles");
