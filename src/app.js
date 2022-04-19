@@ -20,7 +20,7 @@ function formatDate(timestamp) {
     ];
         let day = days[date.getDay()];
         return `${day} ${hours}:${minutes}`;
-    }
+}
 
 
 function displayForecast(response) {
@@ -52,12 +52,13 @@ function displayForecast(response) {
     forecastElement.innerHTML = forecastHTML;
 }
 
+    
 function getForecast(coordinates) {
     console.log(coordinates);
-    let apiKey = "358bb59892afa5069bcb43f658651551";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat={coordinates.lat}&lon={coordinates.lon}&exclude={part}&appid={apiKey}&units=imperial`;
-    console.log(apiUrl);
-    axios.get(apiUrl).then(displayForecast);
+  let apiKey = "358bb59892afa5069bcb43f658651551";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude={part}&appid=${apiKey}&units=imperial`;
+  console.log(apiUrl);
+  axios.get(apiUrl).then(displayForecast);
 }
 
 function displayTemperature(response) {
@@ -132,6 +133,8 @@ function showPositionTemperature(response) {
     maxTempElement.innerHTML = Math.round(response.data.main.temp_max);
     minTempElement.innerHTML = Math.round(response.data.main.temp_min);
     feelsLikeElement.innerHTML = Math.round(response.data.main.feels_like);
+
+    getForecast(response.data.coord);
 }
 
 function searchLocation(position) {
